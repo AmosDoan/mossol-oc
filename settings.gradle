@@ -1,0 +1,5 @@
+rootProject.name = 'mossol-oc'
+
+apply from: "${rootDir}/gradle/scripts/settings-flags.gradle"
+
+includeWithFlags ':web', 'java'

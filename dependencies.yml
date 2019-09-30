@@ -1,0 +1,14 @@
+boms:
+  - org.springframework.boot:spring-boot-dependencies:2.1.8.RELEASE
+
+org.projectlombok:
+  lombok: 
+    version: '1.16.16'
+
+org.eclipse.jetty:
+  jetty-alpn-conscrypt-client: 
+    version: '9.4.11.v20180605'
+
+org.wildfly.openssl:
+  wildfly-openssl:
+    version: '1.0.4.Final'
