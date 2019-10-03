@@ -74,3 +74,10 @@ target/
 # Log
 *.log*
 LOG_FILE_IS_UNDEFINED
+
+# React output files
+dist/
+
+# React
+node_modules
+
