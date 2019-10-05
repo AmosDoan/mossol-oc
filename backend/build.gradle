@@ -1,13 +1,26 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+    // Spring Web
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
-    // Sprint security
+    // Spring configuration processor
+    compile('org.springframework.boot:spring-boot-configuration-processor')
+
+    // Spring security
     compile('org.springframework.boot:spring-boot-starter-security')
 
+    // Spring JPA
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // MySQL
+    runtime('mysql:mysql-connector-java')
+
     // Lombok
-    compile group: 'org.projectlombok', name: 'lombok'
-    annotationProcessor group: 'org.projectlombok', name: 'lombok'
+    compile('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+
+    // Json web token
+    compile('io.jsonwebtoken:jjwt')
 }

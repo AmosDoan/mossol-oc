@@ -12,3 +12,15 @@ org.eclipse.jetty:
 org.wildfly.openssl:
   wildfly-openssl:
     version: '1.0.4.Final'
+
+mysql:
+  mysql-connector-java:
+    version: '5.1.13'
+
+io.jsonwebtoken:
+  jjwt:
+    version: '0.9.1'
+
+com.fasterxml.jackson.datatype:
+  jackson-datatype-jsr310:
+    version : '2.10.0'
