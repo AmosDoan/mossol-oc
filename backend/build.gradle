@@ -3,4 +3,11 @@ apply plugin: 'org.springframework.boot'
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    // Sprint security
+    compile('org.springframework.boot:spring-boot-starter-security')
+
+    // Lombok
+    compile group: 'org.projectlombok', name: 'lombok'
+    annotationProcessor group: 'org.projectlombok', name: 'lombok'
 }
