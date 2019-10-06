@@ -7,19 +7,21 @@ import lombok.extern.slf4j.Slf4j;
 import net.mossol.oc.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Slf4j
-public class JwtTokenUtil {
+@Component
+public class JwtTokenUtilService {
 
-    @Value("${mossol.auth.jwtSecret}")
-    private static String jwtSecret;
+    @Value("${mossol.jwtSecret}")
+    private String jwtSecret;
 
-    @Value("${mossol.auth.jwtExpireTimeMillis}")
-    private static long jwtExpireTimeMillis;
+    @Value("${mossol.jwtExpireTimeMillis}")
+    private long jwtExpireTimeMillis;
 
-    public static String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         Date expireTime = new Date(new Date().getTime() + jwtExpireTimeMillis);
         return Jwts.builder()
@@ -30,7 +32,7 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public static String validateToken(String jwtToken) {
+    public String validateToken(String jwtToken) {
         try {
             Claims claims =
                     Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwtToken)

@@ -10,12 +10,13 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
+  jackson:
+    serialization.WRITE_DATES_AS_TIMESTAMPS: false
+    time-zone: UTC
 logging.level:
   org:
   hibernate.SQL: DEBUG
 
 mossol:
-  auth:
-    jwtSecret: "test"
-    jwtExpireTimeMillis: 3000
+  jwtSecret: "test"
+  jwtExpireTimeMillis: 300000

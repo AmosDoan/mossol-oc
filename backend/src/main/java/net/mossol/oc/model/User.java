@@ -33,6 +33,10 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles = new HashSet<>();
 
+    public User() {
+
+    }
+
     public User(@NotNull String userId, @NotNull String password) {
         this.userId = userId;
         this.password = password;

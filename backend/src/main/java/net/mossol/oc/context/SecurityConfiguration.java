@@ -1,11 +1,13 @@
 package net.mossol.oc.context;
 
+import net.mossol.oc.auth.AuthenticatedUserService;
 import net.mossol.oc.auth.JwtAuthenticationEntryPoint;
 import net.mossol.oc.auth.JwtAuthenticationHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,13 +25,16 @@ import javax.annotation.Resource;
         prePostEnabled = true,
         securedEnabled = true,
         jsr250Enabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Resource
     JwtAuthenticationHandler jwtAuthenticationHandler;
+
+    @Resource
+    AuthenticatedUserService authenticatedUserService;
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -40,6 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(authenticatedUserService)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override

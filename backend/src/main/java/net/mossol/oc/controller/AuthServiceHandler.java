@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.mossol.oc.model.*;
 import net.mossol.oc.repository.RoleRepository;
 import net.mossol.oc.repository.UserRepository;
-import net.mossol.oc.util.JwtTokenUtil;
+import net.mossol.oc.util.JwtTokenUtilService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,23 +40,25 @@ public class AuthServiceHandler {
     @Resource
     PasswordEncoder passwordEncoder;
 
+    @Resource
+    JwtTokenUtilService jwtTokenUtilService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager.authenticate(
+        UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUserId(),
-                        loginRequest.getPassword()
-                )
-        );
+                        loginRequest.getPassword());
+
+        Authentication authentication = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwtToken = JwtTokenUtil.generateToken(authentication);
+        String jwtToken = jwtTokenUtilService.generateToken(authentication);
         return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         if(userRepository.existsByUserId(registerRequest.getUserId())) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
