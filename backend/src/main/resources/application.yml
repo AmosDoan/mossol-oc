@@ -4,6 +4,7 @@ spring:
     username: amos_doan
     password: test!123
     initialization-mode: always
+    driver-class-name: com.mysql.jdbc.Driver # For Windows Environment
   jpa:
     properties:
       hibernate.dialect: org.hibernate.dialect.MySQL5Dialect

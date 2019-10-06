@@ -11,7 +11,7 @@ task buildReactApp(type: NodeTask, dependsOn: 'appNpmInstall') {
     script = project.file("${rootDir}/frontend/node_modules/.bin/webpack")
         args = [
             '--mode', 'development',
-            '--entry', "${rootDir}/frontend/src/App.js",
+            '--entry', "${rootDir}/frontend/src/index.js",
             '-o', "${rootDir}/backend/src/main/resources/static/dist/react-app.js"
         ]
 }
