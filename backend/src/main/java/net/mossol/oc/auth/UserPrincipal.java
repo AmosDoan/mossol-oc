@@ -2,23 +2,30 @@ package net.mossol.oc.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import net.mossol.oc.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
-    private Long id;
+    private long id;
+
     private String userId;
 
     @JsonIgnore
     private String password;
 
+    private Collection<? extends GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
@@ -49,5 +56,18 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public static UserPrincipal create(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getType().name())
+        ).collect(Collectors.toList());
+
+        return new UserPrincipal(
+                user.getId(),
+                user.getUserId(),
+                user.getPassword(),
+                authorities
+        );
     }
 }
