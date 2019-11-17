@@ -45,7 +45,7 @@ public class AuthServiceHandler {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken token =
+        final UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUserId(),
                         loginRequest.getPassword());
@@ -63,7 +63,7 @@ public class AuthServiceHandler {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User(registerRequest.getUserId(), registerRequest.getPassword());
+        final User user = new User(registerRequest.getUserId(), registerRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
