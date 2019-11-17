@@ -22,8 +22,8 @@ public class JwtTokenUtilService {
     private long jwtExpireTimeMillis;
 
     public String generateToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        Date expireTime = new Date(new Date().getTime() + jwtExpireTimeMillis);
+        final UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        final Date expireTime = new Date(new Date().getTime() + jwtExpireTimeMillis);
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date())
@@ -34,7 +34,7 @@ public class JwtTokenUtilService {
 
     public String validateToken(String jwtToken) {
         try {
-            Claims claims =
+            final Claims claims =
                     Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwtToken)
                             .getBody();
             return claims.getSubject();

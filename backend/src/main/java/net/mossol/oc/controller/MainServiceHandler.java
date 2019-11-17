@@ -15,4 +15,9 @@ public class MainServiceHandler {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/auth/test")
+    public ResponseEntity<?> authTest() {
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
