@@ -57,26 +57,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(
-                        "/",
-                        "/favicon.ico",
-                        "/**/*.png",
-                        "/**/*.gif",
-                        "/**/*.svg",
-                        "/**/*.jpg",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js")
-                .permitAll()
-                .antMatchers("/auth/*")
-                .permitAll()
-                .anyRequest().authenticated();
+            .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            .antMatchers(
+                    "/",
+                    "/favicon.ico",
+                    "/**/*.png",
+                    "/**/*.gif",
+                    "/**/*.svg",
+                    "/**/*.jpg",
+                    "/**/*.html",
+                    "/**/*.css",
+                    "/**/*.js")
+            .permitAll()
+            .antMatchers("/auth/*")
+            .permitAll()
+            .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationHandler, UsernamePasswordAuthenticationFilter.class);
     }

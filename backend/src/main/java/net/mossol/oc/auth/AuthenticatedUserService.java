@@ -21,6 +21,7 @@ public class AuthenticatedUserService implements UserDetailsService {
     UserRepository userRepository;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User user = userRepository.findByUserId(username).orElseThrow(
                 () -> new UsernameNotFoundException("Can't find user; userId :" + username)

@@ -7,11 +7,13 @@ import net.mossol.oc.repository.UserRepository;
 import net.mossol.oc.util.JwtTokenUtilService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +52,11 @@ public class AuthServiceHandler {
                         loginRequest.getUserId(),
                         loginRequest.getPassword());
 
-        Authentication authentication = authenticationManager.authenticate(token);
+        final Authentication authentication = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwtToken = jwtTokenUtilService.generateToken(authentication);
-        return ResponseEntity.ok(jwtToken);
+        final String jwtToken = jwtTokenUtilService.generateToken(authentication);
+        return ResponseEntity.ok(new AuthResponse(jwtToken));
     }
 
     @PostMapping("/register")
@@ -77,9 +79,8 @@ public class AuthServiceHandler {
 
         user.setRoles(Collections.singleton(userRole));
 
-        User result = userRepository.save(user);
-
-        URI location = ServletUriComponentsBuilder
+        final User result = userRepository.save(user);
+        final URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUserId()).toUri();
 

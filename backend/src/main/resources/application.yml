@@ -20,4 +20,4 @@ logging.level:
 
 mossol:
   jwtSecret: "test"
-  jwtExpireTimeMillis: 300000
+  jwtExpireTimeMillis: 300000000

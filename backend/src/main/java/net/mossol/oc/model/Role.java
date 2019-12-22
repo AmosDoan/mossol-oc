@@ -2,6 +2,7 @@ package net.mossol.oc.model;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,5 +21,6 @@ public class Role {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private RoleType type;
 }
